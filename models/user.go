@@ -1,46 +1,37 @@
 package models
 
-// type User struct {
-// 	gorm.Model
-// 	ID         uint `gorm:"primary_key,column:cpu"`
-// 	CPU        uint `gorm:"column:cpu"`
-// 	Likes      uint `gorm:"column:likes"`
-// 	Sales      uint `gorm:"column:sales"`
-// 	NewMembers uint `gorm:"column:new_members"`
-
-// 	CreatedAt time.Time
-// 	UpdatedAt time.Time
-// }
+func (User) TableName() string {
+	return "users"
+}
 
 type User struct {
-	Id    int    `json:"id"`
-	Name  string `json:"name"`
-	Phone string `json:"phone"`
-	Email string `json:"email"`
+	Model
+	Name     string `gorm:"not null;comment:'用户名'" json:"name"`
+	Phone    string `gorm:"not null;comment:'手机号'" json:"phone"`
+	Password string `gorm:"not null;comment:'密 码'" json:"-"`
 }
 
-//	func GetUser(where interface{}) *User {
-//		user := new(User)
-//		if err := orm.Model(&user).Where(where).First(user).Error; err != nil {
-//			panic(err)
-//		}
-//		return user
-//	}
-
-func GetUser(where ...interface{}) (user *User, err error) {
-	user = &User{}
-
-	if err := orm.Model(&user).First(&user, where...).Error; err != nil {
-		panic(err)
-	}
-
-	return user, err
-}
-
-func GetUserList() *User {
+// 根据条件查询单条数据
+func GetUser(where interface{}) (*User, error) {
 	user := new(User)
-	if err := orm.Model(&user).Select("*").Error; err != nil {
+	if err := orm.Model(&user).Where(where).First(user).Error; err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func GetUserList() []*User {
+	var users []*User
+	if err := orm.Find(&users).Error; err != nil {
 		panic(err)
 	}
-	return user
+	return users
+}
+
+// 脱敏处理
+func (u *User) Sanitize() map[string]interface{} {
+	return map[string]interface{}{
+		"name":  u.Name,
+		"phone": u.Phone[:3] + "****" + u.Phone[7:],
+	}
 }

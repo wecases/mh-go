@@ -16,6 +16,6 @@ func (con UserController) UserInfo(c *gin.Context) {
 	userinfo := models.GetUserList()
 	c.JSON(http.StatusOK, gin.H{
 		"userinfo": userinfo,
-		"user":     user,
+		"userlist": user,
 	})
 }

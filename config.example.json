@@ -9,7 +9,13 @@
 			"driver": "mysql",
 			"max_idle_con": 5,
 			"max_open_con": 10,
-			"conn_max_life_time": 3600000000000
+			"conn_max_life_time": 3600000000000,
+			"params": {
+				"parseTime": "true",
+				"loc": "Local",
+				"charset": "utf8mb4",
+				"collation": "utf8mb4_unicode_ci"
+			}
 		}
 	},
 	"app_id": "mnAdC2oKv1wU",

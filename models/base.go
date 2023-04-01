@@ -1,20 +1,25 @@
 package models
 
 import (
-	"github.com/GoAdminGroup/go-admin/modules/db"
-	"github.com/jinzhu/gorm"
+	"time"
 )
 
-var (
-	orm *gorm.DB
-	err error
-	Orm = orm
-)
+// 需要迁移的表
+var Tables []interface{} = []interface{}{
+	&User{},
+}
 
-func Init(c db.Connection) {
-	orm, err = gorm.Open("mysql", c.GetDB("default"))
+type BaseModel struct {
+	Id uint `gorm:"primary_key; comment:'ID'" json:"id"`
+}
 
-	if err != nil {
-		panic("initialize orm failed")
-	}
+type Model struct {
+	BaseModel
+	CreatedAt time.Time `gorm:"comment:'创建时间'" json:"create_at"`
+	UpdatedAt time.Time `gorm:"comment:'更新时间'" json:"update_at"`
+}
+
+type SoftDelete struct {
+	Model
+	DeletedAt *time.Time `gorm:"comment:'删除时间'" json:"delete_at"`
 }

@@ -4,6 +4,7 @@
     "commentTranslate.multiLineMerge": true,
     "conventionalCommits.scopes": [
         "bulid",
-        "construct"
+        "construct",
+        "models"
     ]
 }

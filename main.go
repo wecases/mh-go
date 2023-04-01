@@ -49,7 +49,7 @@ func startServer() {
 
 	routers.InitRouters(r, eng)
 
-	models.Init(eng.MysqlConnection())
+	models.Init(eng.DefaultConnection())
 
 	srv := &http.Server{
 		Addr:    ":80",
@@ -74,7 +74,7 @@ func startServer() {
 		log.Fatal("Server forced to shutdown:", err)
 	}
 	log.Print("closing database connection")
-	eng.MysqlConnection().Close()
+	eng.DefaultConnection().Close()
 
 	log.Println("Server exiting")
 }
