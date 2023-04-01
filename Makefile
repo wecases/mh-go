@@ -18,6 +18,8 @@ serve:
 
 build:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o ./build/$(BINARY_NAME) -v ./
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 $(GOBUILD) -o ./build/$(BINARY_NAME)_mac -v ./
+	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 $(GOBUILD) -o ./build/$(BINARY_NAME).exe -v ./
 
 generate:
 	$(CLI) generate -c adm.ini

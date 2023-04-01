@@ -1,5 +1,8 @@
 {
     "commentTranslate.hover.string": true,
     "commentTranslate.hover.variable": true,
-    "commentTranslate.multiLineMerge": true
+    "commentTranslate.multiLineMerge": true,
+    "conventionalCommits.scopes": [
+        "bulid"
+    ]
 }
