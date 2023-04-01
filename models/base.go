@@ -8,6 +8,7 @@ import (
 var (
 	orm *gorm.DB
 	err error
+	Orm = orm
 )
 
 func Init(c db.Connection) {

@@ -7,4 +7,6 @@ import (
 
 func InitRouters(r *gin.Engine, e *engine.Engine) {
 	BaseRouters(r)
+	AdminRouters(r, e)
+	ApiRouters(r)
 }

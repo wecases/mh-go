@@ -1,5 +1,7 @@
-logs/access.log
-logs/error.log
-logs/info.log
+.DS_Store
+logs
+build
+uploads
+
 adm.ini
 config.json
