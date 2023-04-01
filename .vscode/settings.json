@@ -3,6 +3,7 @@
     "commentTranslate.hover.variable": true,
     "commentTranslate.multiLineMerge": true,
     "conventionalCommits.scopes": [
-        "bulid"
+        "bulid",
+        "construct"
     ]
 }

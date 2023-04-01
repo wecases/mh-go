@@ -21,7 +21,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"mh-go/models"
-	"mh-go/pages"
+	"mh-go/routers"
 	"mh-go/tables"
 )
 
@@ -47,10 +47,7 @@ func startServer() {
 
 	r.Static("/uploads", "./uploads")
 
-	eng.HTML("GET", "/admin", pages.GetDashBoard)
-	eng.HTMLFile("GET", "/admin/hello", "./html/hello.tmpl", map[string]interface{}{
-		"msg": "Hello world",
-	})
+	routers.InitRouters(r, eng)
 
 	models.Init(eng.MysqlConnection())
 
