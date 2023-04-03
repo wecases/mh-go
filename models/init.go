@@ -11,7 +11,7 @@ import (
 var (
 	orm *gorm.DB
 	err error
-	DB  = orm
+	DB  *gorm.DB
 )
 
 func Init(c db.Connection) {
@@ -20,6 +20,7 @@ func Init(c db.Connection) {
 	if err != nil {
 		panic("initialize orm failed")
 	}
+	DB = orm
 
 	// 执行迁移
 	migrator()
@@ -32,7 +33,7 @@ func migrator() {
 	for _, table := range Tables {
 		// orm.DropTable(table) // 删除表
 
-		result := orm.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci").AutoMigrate(table)
+		result := orm.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").AutoMigrate(table)
 
 		if result.Error != nil {
 			panic(result.Error)

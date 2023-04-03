@@ -10,7 +10,7 @@ func BaseRouters(r *gin.Engine) {
 	routes := r.Group("/")
 	{
 		routes.GET("/", func(c *gin.Context) {
-			c.HTML(http.StatusOK, "hello.tmpl", gin.H{})
+			c.String(http.StatusOK, "Hello World")
 		})
 	}
 }

@@ -1,8 +1,7 @@
 package api
 
 import (
-	"mh-go/middlewares"
-	"mh-go/models"
+	"mh-go/logic"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,32 +10,56 @@ type LoginController struct {
 	BaseController
 }
 
-func (con LoginController) Login(c *gin.Context) {
-	var body struct {
-		Name     string `json:"name" binding:"required"`
-		Password string `json:"password" binding:"required"`
-	}
+// 注册
+func (con LoginController) Register(c *gin.Context) {
 
-	if err := c.ShouldBindJSON(&body); err != nil {
-		con.Error("无效的请求正文", c)
+	// 绑定参数
+	var data logic.RegisterParams
+
+	// 校验参数
+	if err := c.ShouldBind(&data); err != nil {
+		con.Error("无效的请求参数", c)
 		return
 	}
 
-	user, err := models.GetUser(&models.User{Name: body.Name})
-
+	// 调用注册逻辑
+	user, err := logic.Register(data)
 	if err != nil {
-		con.Error("用户名或密码不正确", c)
+		con.Error("注册失败", c)
 		return
 	}
 
-	token, err := middlewares.GetToken(user)
+	con.Success("注册成功", gin.H{
+		"user": user,
+	}, c)
+}
+
+// 登录
+func (con LoginController) Login(c *gin.Context) {
+	var data logic.LoginParams
+
+	if err := c.ShouldBind(&data); err != nil {
+		con.Error("无效的请求参数", c)
+		return
+	}
+
+	// 调用登录逻辑
+	user, err := logic.Login(data)
+	if err != nil {
+		con.Error(err.Error(), c)
+		return
+	}
+
+	// 生成token
+	token, err := logic.GetToken(user)
 	if err != nil {
 		con.Error("token生成失败", c)
 		return
 	}
 
+	// 返回结果
 	con.Success("登录成功", gin.H{
 		"token": token,
-		"user":  user.Sanitize(),
+		"user":  user,
 	}, c)
 }

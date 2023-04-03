@@ -10,7 +10,7 @@ var Tables []interface{} = []interface{}{
 }
 
 type BaseModel struct {
-	Id uint `gorm:"primary_key; comment:'ID'" json:"id"`
+	ID int64 `gorm:"primary_key; comment:'ID'" json:"id"`
 }
 
 type Model struct {

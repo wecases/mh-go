@@ -5,37 +5,18 @@ import (
 	"mh-go/models"
 	"net/http"
 	"strings"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 )
 
 // 秘钥
-var secret = []byte("hahahsuadhasjkdhsdiopwqei")
+var Secret = []byte("hahahsuadhasjkdhsdiopwqei")
 
 // 定义 token 中的数据结构
 type Claims struct {
 	jwt.StandardClaims
 	User models.User `json:"user"`
-}
-
-// 生成 token
-func GetToken(user *models.User) (string, error) {
-	claims := &Claims{
-		User: *user,
-		StandardClaims: jwt.StandardClaims{
-			// 有效期一小时
-			NotBefore: time.Now().Unix() - 60,
-			// 有效期两小时
-			ExpiresAt: time.Now().Unix() + 60*60*2,
-			// 发行人
-			Issuer: "waset",
-		},
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(secret)
 }
 
 // 验证 token
@@ -47,7 +28,7 @@ func verifyToken(tokenString string) (*jwt.Token, error) {
 			return nil, errors.New("unexpected signing method")
 		}
 
-		return secret, nil
+		return Secret, nil
 	})
 
 	if err != nil {
