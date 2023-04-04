@@ -8,7 +8,8 @@ import (
 
 type BaseController struct{}
 
-func (con BaseController) Success(message string, data interface{}, c *gin.Context) {
+// 成功响应
+func (con BaseController) Success(c *gin.Context, message string, data interface{}) {
 	response := gin.H{
 		"code":    http.StatusOK,
 		"massage": message,
@@ -21,11 +22,22 @@ func (con BaseController) Success(message string, data interface{}, c *gin.Conte
 	c.JSON(http.StatusOK, response)
 }
 
-func (con BaseController) Error(message string, c *gin.Context) {
+// 失败响应
+func (con BaseController) Error(c *gin.Context, message string) {
+	response := gin.H{
+		"code":    http.StatusBadRequest,
+		"massage": message,
+	}
+
+	c.JSON(http.StatusOK, response)
+}
+
+// 异常响应
+func (con BaseController) Exception(c *gin.Context, message string) {
 	response := gin.H{
 		"code":    http.StatusInternalServerError,
 		"massage": message,
 	}
 
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusInternalServerError, response)
 }

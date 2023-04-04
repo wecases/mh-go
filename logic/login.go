@@ -19,7 +19,8 @@ type LoginParams struct {
 // 注册参数
 type RegisterParams struct {
 	LoginParams
-	InviteCode string `form:"invite_code"`
+	ConfirmPassword string `form:"confirm_password" binding:"required,eqcsfield=Password"`
+	InviteCode      string `form:"invite_code"`
 }
 
 // 注册逻辑

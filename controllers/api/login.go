@@ -18,17 +18,17 @@ func (con LoginController) Register(c *gin.Context) {
 
 	// 校验参数
 	if err := c.ShouldBind(&data); err != nil {
-		con.Error("无效的请求参数", c)
+		con.Exception(c, "无效的请求参数")
 		return
 	}
 
 	// 调用注册逻辑
 	if _, err := logic.Register(data); err != nil {
-		con.Error("注册失败", c)
+		con.Error(c, "注册失败")
 		return
 	}
 
-	con.Success("注册成功", nil, c)
+	con.Success(c, "注册成功", nil)
 }
 
 // 登录
@@ -36,29 +36,29 @@ func (con LoginController) Login(c *gin.Context) {
 	var data logic.LoginParams
 
 	if err := c.ShouldBind(&data); err != nil {
-		con.Error("无效的请求参数", c)
+		con.Exception(c, "无效的请求参数")
 		return
 	}
 
 	// 调用登录逻辑
 	user, err := logic.Login(data)
 	if err != nil {
-		con.Error(err.Error(), c)
+		con.Error(c, err.Error())
 		return
 	}
 
 	// 生成token
 	token, err := logic.GetToken(user)
 	if err != nil {
-		con.Error("token生成失败", c)
+		con.Error(c, "token生成失败")
 		return
 	}
 
 	// user.Sanitize()
 
 	// 返回结果
-	con.Success("登录成功", gin.H{
+	con.Success(c, "登录成功", gin.H{
 		"token": token,
 		"user":  user,
-	}, c)
+	})
 }
