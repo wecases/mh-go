@@ -12,8 +12,7 @@ import (
 
 // 注册参数
 type RegisterParams struct {
-	Phone      string `form:"phone" binding:"required"`
-	Password   string `form:"password" binding:"required"`
+	LoginParams
 	InviteCode string `form:"invite_code"`
 }
 
