@@ -10,6 +10,12 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
+// 登录参数
+type LoginParams struct {
+	Phone    string `form:"phone" binding:"required,regex=^1\\d{10}$"`
+	Password string `form:"password" binding:"required"`
+}
+
 // 注册参数
 type RegisterParams struct {
 	LoginParams
@@ -57,12 +63,6 @@ func Register(data RegisterParams) (*models.User, error) {
 	}
 
 	return user, nil
-}
-
-// 登录参数
-type LoginParams struct {
-	Phone    string `form:"phone" binding:"required"`
-	Password string `form:"password" binding:"required"`
 }
 
 // 登录逻辑
