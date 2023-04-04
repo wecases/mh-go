@@ -16,7 +16,7 @@ type User struct {
 	Path       pq.Int64Array `gorm:"type:text;null;comment:'路径'" json:"-"`
 
 	Name     string `gorm:"not null;comment:'用户名'" json:"name"`
-	Phone    string `gorm:"not null;comment:'手机号'" json:"phone"`
+	Phone    string `gorm:"unique;uniqueIndex;not null;comment:'手机号'" json:"phone"`
 	Password string `gorm:"not null;comment:'密 码'" json:"-"`
 	Avatar   string `gorm:"comment:'头像'" json:"avatar"`
 }

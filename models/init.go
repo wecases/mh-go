@@ -31,7 +31,13 @@ func migrator() {
 	fmt.Println("开始迁移表")
 
 	for _, table := range Tables {
-		// orm.DropTable(table) // 删除表
+
+		for _, againTable := range AgainTables {
+			if reflect.DeepEqual(table, againTable) {
+				orm.DropTable(table) // 删除表
+				break
+			}
+		}
 
 		result := orm.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").AutoMigrate(table)
 

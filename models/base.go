@@ -9,6 +9,11 @@ var Tables []interface{} = []interface{}{
 	&User{},
 }
 
+// 需要重建的表
+var AgainTables []interface{} = []interface{}{
+	// &User{},
+}
+
 type BaseModel struct {
 	ID int64 `gorm:"primary_key; comment:'ID'" json:"id"`
 }
