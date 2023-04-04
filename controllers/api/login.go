@@ -23,7 +23,7 @@ func (con LoginController) Register(c *gin.Context) {
 		return
 	}
 
-	if regexp.MustCompile(`/^(?:(?:\\+|00)86)?1\\d{11}$/`).MatchString(data.Phone) {
+	if !regexp.MustCompile(`/^(?:(?:\\+|00)86)?1\\d{11}$/`).MatchString(data.Phone) {
 		con.Error("手机号码格式错误", c)
 		return
 	}
@@ -47,7 +47,7 @@ func (con LoginController) Login(c *gin.Context) {
 		return
 	}
 
-	if regexp.MustCompile(`/^(?:(?:\\+|00)86)?1\\d{11}$/`).MatchString(data.Phone) {
+	if !regexp.MustCompile(`/^(?:(?:\\+|00)86)?1\\d{11}$/`).MatchString(data.Phone) {
 		con.Error("手机号码格式错误", c)
 		return
 	}
