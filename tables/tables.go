@@ -13,11 +13,14 @@ import "github.com/GoAdminGroup/go-admin/plugins/admin/modules/table"
 // example:
 //
 // "users" => http://localhost/admin/info/users
+// "teams" => http://localhost/admin/info/teams
+// "filemanager_setting" => http://localhost/admin/info/filemanager_setting
 //
 // example end
 var Generators = map[string]table.Generator{
 
-	"users": GetUsersTable,
+	"users":               GetUsersTable,
+	"filemanager_setting": GetFilemanagerSettingTable,
 
 	// generators end
 }

@@ -50,7 +50,11 @@ func Register(data RegisterParams) (*models.User, error) {
 		// 设置上级ID
 		user.ParentID = inviteUser.ID
 		// 设置团队路径
-		user.Path = append(inviteUser.Path, inviteUser.ID)
+		if inviteUser.Path != "" {
+			user.Path = inviteUser.Path + "," + inviteUser.InviteCode
+		} else {
+			user.Path = inviteUser.InviteCode
+		}
 	}
 
 	// 设置用户名为手机号的脱敏形式

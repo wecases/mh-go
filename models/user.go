@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -11,9 +10,9 @@ func (User) TableName() string {
 
 type User struct {
 	Model
-	ParentID   int64         `json:"parent_id" gorm:"comment:'父节点id'"`
-	InviteCode string        `json:"invite_code" gorm:"comment:'邀请码'"`
-	Path       pq.Int64Array `json:"-" gorm:"type:text;null;comment:'路径'"`
+	InviteCode string `json:"invite_code" gorm:"unique;uniqueIndex;comment:'邀请码'"`
+	ParentID   uint   `json:"parent_id" gorm:"comment:'父节点id'"`
+	Path       string `json:"path" gorm:"type:text;null;comment:'上级路径'"`
 
 	Name     string `json:"name" gorm:"not null;comment:'用户名'"`
 	Phone    string `json:"phone" gorm:"unique;uniqueIndex;not null;comment:'手机号'"`

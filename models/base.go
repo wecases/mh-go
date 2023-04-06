@@ -15,7 +15,7 @@ var AgainTables []interface{} = []interface{}{
 }
 
 type BaseModel struct {
-	ID int64 `gorm:"primary_key; comment:'ID'" json:"id"`
+	ID uint `gorm:"primary_key; comment:'ID'" json:"id"`
 }
 
 type Model struct {
